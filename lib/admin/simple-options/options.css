@@ -1,0 +1,220 @@
+#optionsframework{
+	border-top: 1px solid #ddd;
+}
+
+#optionsframework h3 {
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	background: none;
+	border: none;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+
+#optionsframework h3 + .explain{
+	max-width: 100%;
+}
+
+#optionsframework .section {
+	border-top: 1px solid #eee;
+	padding: 40px;
+}
+
+#optionsframework .section.hidden {
+	padding-left: 80px;
+}
+
+#optionsframework .section:first-of-type{
+	border: none;
+}
+
+#optionsframework .section .heading {
+	border: none;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+	padding: 0;
+}
+
+#optionsframework .section .controls {
+	float: right;
+	/*text-align: right;*/
+	padding: 0;
+}
+
+#optionsframework .section-info {
+	background: #f5f5f5;
+	background: #F84747;
+	background: #374352;
+	color: white;
+}
+
+#optionsframework .section .explain {
+	color: #aaa;
+	font-weight: 100;
+	float: none;
+}
+
+#optionsframework .section-checkbox .option .controls {
+	float: left;
+	width: 100%;
+}
+
+#optionsframework .section-checkbox .option .controls + .explain {
+	max-width: 38%;
+}
+
+h2.nav-tab-wrapper{
+	margin-bottom: 0;
+}
+
+h2.nav-tab-wrapper, 
+h3.nav-tab-wrapper {
+	border: none;
+}
+
+h2 .nav-tab {
+	border: 1px solid #eee;
+	border-bottom: 0;
+	font-family: helvetica;
+	font-weight: 400;
+	font-size: 14px;
+	border-radius: 2px 2px 0 0;
+}
+
+.nav-tab:hover, h2 .nav-tab-active {
+	border: 1px solid #ccc;
+	border-bottom: 0;
+	position: relative;
+	z-index: 1;
+	background: white;
+}
+
+h2 .nav-tab:active{
+	outline: none;
+}
+
+.icon32.icon-appearance, #icon-themes{
+	background: url(images/simple1.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 70%;
+	float: left;
+	width: 40px;
+	display: block;
+	height: 40px;
+	top: 5px;
+	margin-right: 5px;
+	position: relative;
+}
+
+
+#wpbody-content .metabox-holder {
+	padding: 0;
+}
+
+#optionsframework .controls select, #optionsframework .controls textarea, #optionsframework .of-input {
+	padding: 10px;
+	border-radius: 0;
+}
+
+
+#optionsframework .section-background .wp-picker-container,
+.wp-core-ui .button, 
+.wp-core-ui .button-secondary,
+#optionsframework .controls input.upload {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#optionsframework .controls input.upload {
+	width: auto;
+}
+
+
+
+
+/* Customizer */
+/*.wp-full-overlay.collapsed, 
+.wp-full-overlay.expanded .wp-full-overlay-sidebar {
+	box-shadow: none;
+}
+.wp-full-overlay-sidebar .wp-full-overlay-header {
+	box-shadow: none;
+	border: none;
+	padding: 10px 20px;
+	position: relative;
+	height: auto;
+	line-height: normal;
+}
+#customize-header-actions > a, 
+#customize-header-actions > input {
+	border-radius: 0;
+	background: none;
+	padding: 7px 15px;
+	height: auto;
+	width: auto;
+	text-shadow: none;
+	line-height: normal;
+}
+#customize-header-actions .button-primary {
+	margin: 0;
+	background: teal;
+}
+.wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
+
+}
+.wp-full-overlay-sidebar .wp-full-overlay-footer {
+	border: none;
+	box-shadow: none;
+}
+.accordion-section {
+	border: none;
+}
+.wp-full-overlay-sidebar-content .accordion-section:first-child {
+	border: none;
+}
+#customize-info .theme-name {
+	text-shadow: none;
+}
+#customize-info .accordion-section-content {
+	border: none;
+}
+.accordion-section-title {
+	border: none;
+}
+.accordion-section:last-child {
+	box-shadow: none;
+}
+.control-section .accordion-section-title {
+	background: none;
+	text-shadow: none;
+	border: none;
+}
+#customize-theme-controls .control-section:hover .accordion-section-title, #customize-theme-controls .control-section .accordion-section-title:hover, #customize-theme-controls .control-section.open .accordion-section-title, #customize-theme-controls .control-section .accordion-section-title:focus {
+	background: none;
+	border: none;
+	text-shadow: none;
+	color: #000;
+}
+#customize-theme-controls .control-section.accordion-section:hover, #customize-theme-controls .control-section.accordion-section.open {
+	border: none;
+}
+.accordion-section-content {
+	background: white;
+}
+.customize-control input[type=text] {
+	border-radius: 0;
+	padding: 10px;
+}
+.wp-full-overlay .collapse-sidebar-label {
+	text-shadow: none;
+}*/
+
+
+
+/* Acf Tabs backend posts */
+.acf-tab-group li a {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+}

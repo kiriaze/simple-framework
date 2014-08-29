@@ -1,0 +1,22 @@
+/* TEAM */
+
+	Developer:				Constantine Kiriaze
+	Contact:				hello [at] kiriaze.com
+	Twitter:				@kiriaze
+	From:					San Diego, CA
+
+	Site:					http://kiriaze.com
+	Twitter:				https://twitter.com/kiriaze
+	Location:				San Diego, CA
+
+
+/* THANKS */
+	Title: Name
+	Twitter: @
+	From: San Diego, CA
+
+
+/* SITE */
+	Standards: HTML5, CSS3
+	Components: jQuery, and more!
+	Software: Sublime Text 2, PS, Chrome, Iterm, Git, Pagodabox, Hammer/Codekit, Anvil, and lots of coffee!
