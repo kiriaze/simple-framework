@@ -11,16 +11,16 @@ if ( function_exists( 'register_nav_menus' ) ) {
 }
 
 if( !function_exists('simple_menu_output') ) {
-	
+
 	function simple_menu_output($args=array()){
-		
+
 		$defaults = array(
 			'theme_location'  => '',
-			'menu'            => '', 
+			'menu'            => '',
 			'container'       => false,
-			'container_class' => '', 
+			'container_class' => '',
 			'container_id'    => '',
-			'menu_class'      => 'menu', 
+			'menu_class'      => 'menu',
 			'menu_id'         => '',
 			'echo'            => true,
 			'fallback_cb'     => '',
@@ -34,9 +34,9 @@ if( !function_exists('simple_menu_output') ) {
 		);
 
 		$options = array_merge($defaults, $args);
-		
+
 		echo wp_nav_menu($args);
-				
+
 	}
-		
+
 }
