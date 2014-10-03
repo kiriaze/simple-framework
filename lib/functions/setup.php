@@ -64,8 +64,8 @@ function simple_setup() {
 	add_theme_support('theme-options-setup');		//	Enable Setup tab in theme options
 	add_theme_support('more-themes-link');			//	Enable more theme links under dashboard menu
 	add_theme_support('admin-footer-text');			//	Enable extra text in admin footer
-	add_theme_support('remove_admin_menu_items');	//	Remove Unwanted Admin Menu Items(left hand side)
-	add_theme_support('remove_admin_bar_links');	//	Remove Unwanted Admin Menu Items(from admin bar)
+	// add_theme_support('remove_admin_menu_items');	//	Remove Unwanted Admin Menu Items(left hand side)
+	// add_theme_support('remove_admin_bar_links');	//	Remove Unwanted Admin Menu Items(from admin bar)
 
 	//  Redirect to theme options on theme activation
 	if( is_admin() && isset($_GET['activated']) && 'themes.php' == $GLOBALS['pagenow'] ) {

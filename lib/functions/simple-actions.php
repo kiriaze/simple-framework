@@ -466,6 +466,7 @@ if ( !function_exists('simple_social_footer') ) {
 		$icon		= isset($args['icon']) ? $args['icon'] : true;
 		$classes 	= isset($args['classes']) ? $args['classes'] : array('');
 		$iconFont 	= isset($args['iconFont']) ? $args['iconFont'] : 'fa';
+		$target		= isset($args['target']) ? $args['target'] : '_new';
 
 		$c = '';
 
@@ -509,13 +510,14 @@ if ( !function_exists('simple_social_footer') ) {
 
 					$channel = preg_replace( "/_/", "-", strtolower(substr($key, 0, -4)) );
 
+
 					if ( $icon ) :
 
 						$icon = '<i class="'.$iconFont.'-'.$channel.'"></i>';
 						$icon = ( in_array( 'flip', $classes ) ) ? str_repeat($icon,2) : $icon;
 						echo '
 						<li>
-						    <a href="http://www.'.$channel.'.com/'.$value.'" title="'.ucfirst($channel).'" class="'.$channel.' '.$c.'">
+						    <a href="http://www.'.$channel.'.com/'.$value.'" title="'.ucfirst($channel).'" class="'.$channel.' '.$c.'" target="'.$target.'">
 						    '.$icon.'
 						    </a>
 						</li>
