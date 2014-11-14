@@ -84,6 +84,7 @@
 ================================================== */
 add_filter( 'body_class', 'simple_body_class' );
 function simple_body_class( $classes ){
+	
 	global $post;
 
 	//	Conditional Checking
@@ -100,24 +101,9 @@ function simple_body_class( $classes ){
 	$single 				= is_single() ? 'single '.sanitize_html_class($post->post_name) : '';
 	$one_page				= ( of_get_option('child_general_multi_checkbox')['enable_one_page'] == '1' ) ? 'one-page' : '';
 
-	$page_slug 				= !is_search() && !is_404() ? $post->post_type . '-' . $post->post_name : '';
+	$page_slug 				= !is_search() && !is_404() && isset( $post->ID ) ? $post->post_type . '-' . $post->post_name : '';
 	// sanitize_html_class($post->post_name), // slug
 
-
-	// global $is_IE, $is_safari, $is_chrome, $is_iphone;
-
-	// if($is_safari) $classes[] = 'safari';
-	// elseif($is_chrome) $classes[] = 'chrome';
-	// elseif($is_IE) {
-	//     $classes[] = 'ie';
-	//     $browser = $_SERVER[ 'HTTP_USER_AGENT' ];
-	//     if( preg_match( "/MSIE 7.0/", $browser ) ) {
-	//         $classes[] = 'ie7';
-	//     }
-	// }
-	// else $classes[] = 'unknown';
-
-	// if($is_iphone) $classes[] = 'iphone';
 
 	//	Output classes
 	return array(
@@ -369,10 +355,10 @@ function simple_debug($current_user){
 
 /*	Simple Print
 ================================================== */
-function sp( $var, $args=array() ){
+function sp( $var, $args = array() ){
 
 	$defaults = array(
-		'strip_tags'  => false,
+		'strip_tags'  	=> false,
 		'allow_tags'	=> null
 	);
 
