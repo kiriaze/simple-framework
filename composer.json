@@ -9,12 +9,5 @@
             "email"                             : "hello@kiriaze.com",
             "homepage"                          : "http://kiriaze.com/"
         }
-    ],
-    "extra"       : {
-        "webroot-dir": "wp",
-        "webroot-package": "wordpress"
-    },
-    "config"      : {
-        "vendor-dir"                            :  "wp-content/vendor"
-    }
+    ]
 }
