@@ -3,9 +3,6 @@
 
     "description" : "Simple Wordpress Parent Framework",
 
-    "type": "wordpress-theme",
-    "version": "dev-master",
-
     "authors"     : [
         {
             "name"                              : "Constantine Kiriaze",
@@ -13,10 +10,8 @@
             "homepage"                          : "http://kiriaze.com/"
         }
     ],
-    
-    "minimum-stability": "dev",
 
     "require"     : {
-        "kiriaze/simple"                                       : "dev-master"
+        
     }
 }
