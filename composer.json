@@ -12,6 +12,6 @@
     ],
 
     "require"     : {
-        "kiriaze/simple"                                       : "*"
+        "kiriaze/simple"                                       : "dev-master"
     }
 }
