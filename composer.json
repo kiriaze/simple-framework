@@ -9,5 +9,6 @@
             "email"                             : "hello@kiriaze.com",
             "homepage"                          : "http://kiriaze.com/"
         }
-    ]
+    ],
+    "version": "dev-master"
 }
