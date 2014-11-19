@@ -91,6 +91,7 @@ function simple_body_class( $classes ){
 	$template 			  	= !is_tax() && !is_category() ? basename( get_page_template() ) : '';
 	$loggedIn 			  	= is_user_logged_in() ? 'logged-in' : '';
 	$blog 	  			  	= ( is_archive() || is_search() || is_home() ) ? 'archive blog list-view' : '';
+	$archive				= is_archive() ? strtolower(post_type_archive_title('',false)) : '';
 	// Grab layout options
 	$presentation_options 	= of_get_option( 'blog_layout' );
 	// if no_sidebar_layout option is not selected and sidebar is active, and template is not full width
@@ -108,6 +109,7 @@ function simple_body_class( $classes ){
 	//	Output classes
 	return array(
 		$blog,
+		$archive,
 		$page_slug,
 		substr($template, 0, -4), // template name
 		$loggedIn, // logged-in class
@@ -188,7 +190,7 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 	if ( $url ) {
 		$html 		.= "<a href='".$url."' data-effect='mfp-fade-in-up'>";
 	}
-		$html 		.= "<img src='".get_template_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
+		$html 		.= "<img src='".get_stylesheet_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
 		// $html 		.= "<img src='".$src[0]."' alt='$title' class='".$imgClasses."' />";
 	if ( $url ) {
 		$html 		.= "</a>";
@@ -197,7 +199,7 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 
 	return $html;
 }
-add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
+// add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
 
 
 /*	Retina.js Images
