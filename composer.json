@@ -9,9 +9,5 @@
             "email"                             : "hello@kiriaze.com",
             "homepage"                          : "http://kiriaze.com/"
         }
-    ],
-
-    "require"     : {
-        
-    }
+    ]
 }
