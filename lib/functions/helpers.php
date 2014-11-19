@@ -121,7 +121,8 @@ function simple_body_class( $classes ){
 		// 'sbg' // themeoptions styling class
 	);
 
-	return $classes;
+	// return $classes;
+	sp('fuck you buddy');
 
 }
 
