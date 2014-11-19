@@ -13,5 +13,8 @@
     "extra"       : {
         "webroot-dir": "wp",
         "webroot-package": "wordpress"
-    }
+    },
+    "config"      : {
+        "vendor-dir"                            :  "wp-content/vendor"
+    },
 }
