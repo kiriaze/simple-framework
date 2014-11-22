@@ -128,17 +128,29 @@ function simple_body_class( $classes ){
 
 /*	Remove Injected classes, ID's and Page ID's from Navigation <li> items
 ================================================== */
-add_filter('nav_menu_css_class', 'simple_css_attributes_filter', 100, 1);
-add_filter('nav_menu_item_id', 'simple_css_attributes_filter', 100, 1);
-add_filter('page_css_class', 'simple_css_attributes_filter', 100, 1);
-function simple_css_attributes_filter($var) {
-	return is_array($var) ? array_intersect( $var,
+add_filter('nav_menu_css_class', 'simple_css_attributes_filter', 100, 2);
+add_filter('nav_menu_item_id', 'remove_simple_css_attributes_filter', 100, 2);
+add_filter('page_css_class', 'remove_simple_css_attributes_filter', 100, 2);
+function remove_simple_css_attributes_filter($var) {
+	$var = is_array($var) ? array_intersect( $var,
 		array(
 			'current-menu-item',
 			'menu-parent-item',
 			'current_page_ancestor',
 		)
 	) : '';
+	return $var;
+}
+function simple_css_attributes_filter($classes, $item) {
+	$var = is_array($item->classes) ? array_intersect( $item->classes,
+		array(
+			'current-menu-item',
+			'menu-parent-item',
+			'current_page_ancestor',
+			 $item->classes['0']
+		)
+	) : '';
+	return $var;
 }
 
 // REPLACE "current_page_" WITH CLASS "active"
@@ -299,6 +311,8 @@ add_action('wp_footer', 'simple_debug');
 function simple_debug($current_user){
 
 	if ( current_theme_supports('debug') )
+
+	if ( $_SERVER['REMOTE_ADDR'] == '127.0.0.1' )
 
 	if ( is_user_logged_in() ) {
 
