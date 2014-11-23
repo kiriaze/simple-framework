@@ -295,6 +295,16 @@ if ( !function_exists('simple_post_meta') ) {
 
 		$html = '';
 
+
+
+		sp($args);
+		// order output on array order
+		foreach ($args as $key => $value) {
+			if ( $value ) {
+				sp($key);
+			}
+		}
+
 	?>
 
 	<?php
@@ -498,7 +508,6 @@ if ( !function_exists('simple_social_footer') ) {
 				'tumblr_url'
 			);
 			$result = compact($arr);
-
 		?>
 
 		<ul class="social-foot">
@@ -509,15 +518,21 @@ if ( !function_exists('simple_social_footer') ) {
 				if ( $value ) :
 
 					$channel = preg_replace( "/_/", "-", strtolower(substr($key, 0, -4)) );
+					$class = preg_replace( "/_/", "-", strtolower(substr($key, 0, -4)) ); // duped to work with gplus
 
+					// special use case for gplus
+					if ( $key == 'google_plus_url' ) {
+						$channel = 'plus.google';
+						$class = 'google-plus';
+					}
 
 					if ( $icon ) :
 
-						$icon = '<i class="'.$iconFont.'-'.$channel.'"></i>';
+						$icon = '<i class="'.$iconFont.'-'.$class.'"></i>';
 						$icon = ( in_array( 'flip', $classes ) ) ? str_repeat($icon,2) : $icon;
 						echo '
 						<li>
-						    <a href="http://www.'.$channel.'.com/'.$value.'" title="'.ucfirst($channel).'" class="'.$channel.' '.$c.'" target="'.$target.'">
+						    <a href="https://www.'.$channel.'.com/'.$value.'" title="'.ucfirst($channel).'" class="'.$class.' '.$c.'" target="'.$target.'">
 						    '.$icon.'
 						    </a>
 						</li>
@@ -527,7 +542,7 @@ if ( !function_exists('simple_social_footer') ) {
 
 						echo '
 						<li>
-						    <a href="http://www.'.$channel.'.com/'.$value.'" title="'.ucfirst($channel).'" class="'.$channel.' '.$c.'">
+						    <a href="https://www.'.$channel.'.com/'.$value.'" title="'.ucfirst($channel).'" class="'.$class.' '.$c.'" target="'.$target.'">
 						    '.$channel.'
 						    </a>
 						</li>

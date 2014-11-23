@@ -15,8 +15,7 @@
 *		- Delete Retina Image
 *
 * 	3. Debugging
-*		- Template Check
-*		- Debug Bar
+*		- Debug Bar ( now includes template check in it )
 *		- Pretty Print pp() Extending print_r()
 *
 * 	3. Removals
@@ -285,38 +284,34 @@ add_filter( 'delete_attachment', 'delete_retina_support_images' );
 	2. Debugging
 ============================================ */
 
-/* 	Template Check
-================================================== */
-add_action('wp_head', 'simple_check_template');
-function simple_check_template() {
-	global $template;
-	$template 		= basename( simple_template_path() );
-	$template 		= explode( '/', $template );
-	$array_count 	= count( $template );
-	$array_count 	= $array_count - 1;
-	$template 		= $template[$array_count];
-?>
-
-<script type="text/javascript">
-	console.log( 'Template: <?php echo $template; ?>' );
-</script>
-
-<?php }
-
-
-
 /*	Debug Bar
 ============================================ */
 add_action('wp_footer', 'simple_debug');
 function simple_debug($current_user){
 
-	if ( current_theme_supports('debug') )
+	// if theme enables it
+	if ( current_theme_supports('debug')  )
 
-	if ( is_user_logged_in() ) {
+	// if user is currently logged in and its in local env
+	if ( is_user_logged_in() && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
+
+		global $template;
+		$template 		= basename( simple_template_path() );
+		$template 		= explode( '/', $template );
+		$array_count 	= count( $template );
+		$array_count 	= $array_count - 1;
+		$template 		= $template[$array_count];
 
 		global $current_user;
-		global $template;
 		get_currentuserinfo();
+
+	?>
+
+	<script type="text/javascript">
+		console.log( 'Template: <?php echo $template; ?>' );
+	</script>
+
+	<?php
 
 		$debug_bar = '<style>
 						#debug-bar{
@@ -364,6 +359,7 @@ function simple_debug($current_user){
 	}
 
 }
+
 
 
 
