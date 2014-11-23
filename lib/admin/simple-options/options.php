@@ -485,7 +485,7 @@ function optionsframework_options() {
 	// Excerpt Length
 	$options['excerpt_length'] = array(
 		'name' 	=> __('Excerpt Length', SIMPLE_THEME_SLUG),
-		'desc'	=> __('Set number of words for post excerpts.', SIMPLE_THEME_SLUG),
+		'desc'	=> __('Set number of characters for post excerpts.', SIMPLE_THEME_SLUG),
 		'id' 	=> 'excerpt_length',
 		'std' 	=> '20',
 		'type' 	=> 'text'

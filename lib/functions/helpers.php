@@ -83,12 +83,14 @@
 ================================================== */
 add_filter( 'body_class', 'simple_body_class' );
 function simple_body_class( $classes ){
+
 	global $post;
 
 	//	Conditional Checking
 	$template 			  	= !is_tax() && !is_category() ? basename( get_page_template() ) : '';
 	$loggedIn 			  	= is_user_logged_in() ? 'logged-in' : '';
 	$blog 	  			  	= ( is_archive() || is_search() || is_home() ) ? 'archive blog list-view' : '';
+	$archive				= is_archive() ? strtolower(post_type_archive_title('',false)) : '';
 	// Grab layout options
 	$presentation_options 	= of_get_option( 'blog_layout' );
 	// if no_sidebar_layout option is not selected and sidebar is active, and template is not full width
@@ -99,28 +101,14 @@ function simple_body_class( $classes ){
 	$single 				= is_single() ? 'single '.sanitize_html_class($post->post_name) : '';
 	$one_page				= ( of_get_option('child_general_multi_checkbox')['enable_one_page'] == '1' ) ? 'one-page' : '';
 
-	$page_slug 				= !is_search() && !is_404() ? $post->post_type . '-' . $post->post_name : '';
+	$page_slug 				= !is_search() && !is_404() && isset( $post->ID ) ? $post->post_type . '-' . $post->post_name : '';
 	// sanitize_html_class($post->post_name), // slug
 
-
-	// global $is_IE, $is_safari, $is_chrome, $is_iphone;
-
-	// if($is_safari) $classes[] = 'safari';
-	// elseif($is_chrome) $classes[] = 'chrome';
-	// elseif($is_IE) {
-	//     $classes[] = 'ie';
-	//     $browser = $_SERVER[ 'HTTP_USER_AGENT' ];
-	//     if( preg_match( "/MSIE 7.0/", $browser ) ) {
-	//         $classes[] = 'ie7';
-	//     }
-	// }
-	// else $classes[] = 'unknown';
-
-	// if($is_iphone) $classes[] = 'iphone';
 
 	//	Output classes
 	return array(
 		$blog,
+		$archive,
 		$page_slug,
 		substr($template, 0, -4), // template name
 		$loggedIn, // logged-in class
@@ -139,17 +127,29 @@ function simple_body_class( $classes ){
 
 /*	Remove Injected classes, ID's and Page ID's from Navigation <li> items
 ================================================== */
-add_filter('nav_menu_css_class', 'simple_css_attributes_filter', 100, 1);
-add_filter('nav_menu_item_id', 'simple_css_attributes_filter', 100, 1);
-add_filter('page_css_class', 'simple_css_attributes_filter', 100, 1);
-function simple_css_attributes_filter($var) {
-	return is_array($var) ? array_intersect( $var,
+add_filter('nav_menu_css_class', 'simple_css_attributes_filter', 100, 2);
+add_filter('nav_menu_item_id', 'remove_simple_css_attributes_filter', 100, 2);
+add_filter('page_css_class', 'remove_simple_css_attributes_filter', 100, 2);
+function remove_simple_css_attributes_filter($var) {
+	$var = is_array($var) ? array_intersect( $var,
 		array(
 			'current-menu-item',
 			'menu-parent-item',
 			'current_page_ancestor',
 		)
 	) : '';
+	return $var;
+}
+function simple_css_attributes_filter($classes, $item) {
+	$var = is_array($item->classes) ? array_intersect( $item->classes,
+		array(
+			'current-menu-item',
+			'menu-parent-item',
+			'current_page_ancestor',
+			 $item->classes['0']
+		)
+	) : '';
+	return $var;
 }
 
 // REPLACE "current_page_" WITH CLASS "active"
@@ -201,7 +201,7 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 	if ( $url ) {
 		$html 		.= "<a href='".$url."' data-effect='mfp-fade-in-up'>";
 	}
-		$html 		.= "<img src='".get_template_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
+		$html 		.= "<img src='".get_stylesheet_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
 		// $html 		.= "<img src='".$src[0]."' alt='$title' class='".$imgClasses."' />";
 	if ( $url ) {
 		$html 		.= "</a>";
@@ -210,7 +210,7 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 
 	return $html;
 }
-add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
+// add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
 
 
 /*	Retina.js Images
@@ -292,6 +292,7 @@ function simple_debug($current_user){
 	// if theme enables it
 	if ( current_theme_supports('debug')  )
 
+
 	// if user is currently logged in and its in local env
 	if ( is_user_logged_in() && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
 
@@ -365,10 +366,10 @@ function simple_debug($current_user){
 
 /*	Simple Print
 ================================================== */
-function sp( $var, $args=array() ){
+function sp( $var, $args = array() ){
 
 	$defaults = array(
-		'strip_tags'  => false,
+		'strip_tags'  	=> false,
 		'allow_tags'	=> null
 	);
 
