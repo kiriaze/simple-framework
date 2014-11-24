@@ -1,9 +1,8 @@
 {
   "name": "simple",
   "description": "WordPress Theme description",
-  "keywords": ["wordpress", "theme", "simple"],
+  "type": "wordpress-theme"
   "homepage": "http://getsimple.io",
-  "license": "MIT",
   "authors": [
     {
       "name": "Constantine Kiriaze",
@@ -11,5 +10,5 @@
       "homepage": "http://getsimple.io"
     }
   ],
-  "type": "wordpress-theme"
+  "minimum-stability": "dev-master"
 }
