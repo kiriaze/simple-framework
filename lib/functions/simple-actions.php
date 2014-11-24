@@ -293,171 +293,187 @@ if ( !function_exists('simple_post_meta') ) {
 		$comments 		= isset($args['comments']) ? $args['comments'] : false;
 		$icons 			= isset($args['icons']) ? $args['icons'] : false;
 
-		$html = '';
+		$html         	= '';
+		$post_options 	= of_get_option('blog_postmeta_checkbox');
 
 
 
-		sp($args);
-		// order output on array order
-		foreach ($args as $key => $value) {
-			if ( $value ) {
-				sp($key);
+		// author output
+		$authorOutput = '';
+		if ( $post_options['post_author'] ) :
+			$authorOutput .= '<span class="meta-label meta-author">';
+			if ( $icons ) :
+				$authorOutput .= '<i class="ion-person"></i>';
+			endif;
+			$authorOutput .= '<a href="'.get_author_posts_url( get_the_author_meta( 'ID' ) ) .'">';
+			$authorOutput .= get_the_author();
+			$authorOutput .= '</a>';
+			$authorOutput .= '</span>';
+		endif;
+
+
+
+		// post_date output
+		$dateOutput = '';
+		if ( $post_options['post_date'] ) :
+			$dateOutput .= '<span class="meta-label meta-time">';
+			if ( $icons ) :
+				$dateOutput .= '<i class="ion-calendar"></i>';
+			endif;
+			$dateOutput .= '<time datetime="'. get_the_time( get_option('date_format') ) .'" pubdate>'. get_the_time( get_option('date_format') ) .'</time>';
+			$dateOutput .= '</span>';
+		endif;
+
+
+
+		// tags
+		$tagsOutput = '';
+		if ( $post_options['post_tags'] ) :
+			if ( has_tag() ) {
+
+				$tagsOutput .= '<span class="meta-label meta-tags">';
+
+				if ( $icons ) :
+					$tagsOutput .= '<i class="fi-check"></i>';
+				endif;
+
+				$posttags = get_the_tags();
+				if ($posttags) {
+					foreach($posttags as $tag) {
+						$tagsOutput .= '<a href="'.get_tag_link($tag->term_id).'">';
+						$tagsOutput .= $tag->name . ' ';
+						$tagsOutput .= '</a>';
+					}
+				}
+
+				$tagsOutput .= '</span>';
 			}
-		}
+		endif;
 
-	?>
 
-	<?php
-	    $html .= '<div class="post-meta">';
 
-	    	$post_options = of_get_option('blog_postmeta_checkbox');
+		// categories
+		$categoriesOutput = '';
+		if ( $post_options['post_category'] ) :
+			$categoriesOutput .= '<span class="meta-label meta-category">';
 
-    		if ( $author ) :
-	    		if ( $post_options['post_author'] ) :
-					$html .= '<span class="meta-label meta-author">';
-					if ( $icons ) :
-						$html .= '<i class="ion-person"></i>';
-					endif;
-					$html .= '<a href="'.get_author_posts_url( get_the_author_meta( 'ID' ) ) .'">';
-					$html .= get_the_author();
-					$html .= '</a>';
-					$html .= '</span>';
-				endif;
+			if ( $icons ) :
+				$categoriesOutput .= '<i class="fi-clock"></i>';
 			endif;
 
-			if ( $date ) :
-				if ( $post_options['post_date'] ) :
-					$html .= '<span class="meta-label meta-time">';
-					if ( $icons ) :
-						$html .= '<i class="ion-calendar"></i>';
-					endif;
-					$html .= '<time datetime="'. get_the_time( get_option('date_format') ) .'" pubdate>'. get_the_time( get_option('date_format') ) .'</time>';
-					$html .= '</span>';
-				endif;
+			// sp(get_the_taxonomies()); // for custom terms
+
+			$categories = get_the_category();
+			$separator = ' ';
+			$output = '';
+			if ($categories){
+				foreach($categories as $category) {
+					$output .= '<a href="'.get_category_link( $category->term_id ).'" title="' . esc_attr( sprintf( __( "View all posts in %s", SIMPLE_THEME_SLUG ), $category->name ) ) . '">'.$category->cat_name.'</a>'.$separator;
+				}
+				$categoriesOutput .= trim($output, $separator);
+			}
+
+			$categoriesOutput .= '</span>';
+		endif;
+
+
+
+		// wordcount
+		$wordcountOutput = '';
+		if ( $post_options['post_wordcount'] ) :
+			$wordcountOutput .= '<span class="meta-label meta-wordcount">';
+			if ( $icons ) :
+				$wordcountOutput .= '<i class="ion-pound"></i>';
 			endif;
+			$wordcountOutput .= wordcount();
+			$wordcountOutput .= __(' Words', SIMPLE_THEME_SLUG);
+			$wordcountOutput .= '</span>';
+		endif;
 
-			if ( $tags ) :
-	    		if ( $post_options['post_tags'] ) {
-	    			if ( has_tag() ) {
 
-	    				$html .= '<span class="meta-label meta-tags">';
 
-	    				if ( $icons ) :
-	    					$html .= '<i class="fi-check"></i>';
-						endif;
+		// reading time
+		$reading_timeOutput = '';
+		if ( $post_options['post_reading_time'] ) :
+			$reading_timeOutput .= '<span class="meta-label meta-reading-time">';
+			if ( $icons ) :
+				$reading_timeOutput .= '<i class="ion-ios7-clock"></i>';
+			endif;
+			$reading_timeOutput .= reading_time();
+			$reading_timeOutput .= __( ' Minute Read', SIMPLE_THEME_SLUG );
+			$reading_timeOutput .= '</span>';
+		endif;
 
-						$posttags = get_the_tags();
-						if ($posttags) {
-							foreach($posttags as $tag) {
-								$html .= '<a href="'.get_tag_link($tag->term_id).'">';
-								$html .= $tag->name . ' ';
-								$html .= '</a>';
-							}
-						}
 
-	    				$html .= '</span>';
-	    			}
-	    		}
-    		endif;
 
-			if ( $categories ) :
-				if ( $post_options['post_category'] ) {
+		// views
+		$viewsOutput = '';
+		if ( $post_options['post_view_count'] ) :
+			$viewsOutput .= '<span class="meta-label meta-view-count">';
+			if ( $icons ) :
+				$viewsOutput .= '<i class="ion-eye"></i>';
+			endif;
+			$viewsOutput .= wpb_get_post_views( get_the_ID() );
+			$viewsOutput .= '</span>';
+		endif;
 
-					$html .= '<span class="meta-label meta-category">';
+
+
+		// comments
+		$commentsOutput = '';
+		if ( $post_options['post_comments'] ) :
+
+			if ( comments_open() && ! post_password_required() ) :
+
+				$num_comments = get_comments_number();
+
+				if ( comments_open() ) {
+
+
+					$commentsOutput .= '<span class="meta-label meta-comment">';
 
 					if ( $icons ) :
-						$html .= '<i class="fi-clock"></i>';
+						$commentsOutput .= '<i class="ion-chatbubble"></i>';
 					endif;
 
-					// sp(get_the_taxonomies()); // for custom terms
-
-					$categories = get_the_category();
-					$separator = ' ';
-					$output = '';
-					if ($categories){
-						foreach($categories as $category) {
-							$output .= '<a href="'.get_category_link( $category->term_id ).'" title="' . esc_attr( sprintf( __( "View all posts in %s", SIMPLE_THEME_SLUG ), $category->name ) ) . '">'.$category->cat_name.'</a>'.$separator;
-						}
-						$html .= trim($output, $separator);
+					if ( $num_comments == 0 ) {
+						$comments = __('No Comments', SIMPLE_THEME_SLUG);
+					} elseif ( $num_comments > 1 ) {
+						$comments = $num_comments . __(' Comments', SIMPLE_THEME_SLUG);
+					} else {
+						$comments = __('1 Comment', SIMPLE_THEME_SLUG);
 					}
 
-					$html .= '</span>';
+					$commentsOutput .= '<a href="' . get_comments_link() .'">'. $comments.'</a>';
+
+				} else {
+					$commentsOutput .=  __('Comments are off for this post.', SIMPLE_THEME_SLUG);
 				}
+
+				if ( $num_comments != 0 ) {
+					$commentsOutput .= '</span>';
+				}
+
 			endif;
 
-			if ( $wordcount ) :
-				if ( $post_options['post_wordcount'] ) {
-					$html .= '<span class="meta-label meta-wordcount">';
-					if ( $icons ) :
-						$html .= '<i class="ion-pound"></i>';
-					endif;
-					$html .= wordcount();
-					$html .= __(' Words', SIMPLE_THEME_SLUG);
-					$html .= '</span>';
+		endif;
+
+
+
+		// sp($args);
+		// order output on array order
+		$html .= '<div class="post-meta">';
+			foreach ( $args as $key => $value ) {
+				if ( $value ) {
+					// sp($key);
+					if ( $key == 'icons' ) continue;
+					$keyOutput = $key.'Output';
+					echo $$keyOutput;
 				}
-			endif;
-
-			if ( $reading_time ) :
-				if ( $post_options['post_reading_time'] ) {
-					$html .= '<span class="meta-label meta-reading-time">';
-					if ( $icons ) :
-			    		$html .= '<i class="ion-ios7-clock"></i>';
-			    	endif;
-					$html .= reading_time();
-					$html .= __( ' Minute Read', SIMPLE_THEME_SLUG );
-					$html .= '</span>';
-		    	}
-	    	endif;
-
-			if ( $views ) :
-		    	if ( $post_options['post_view_count'] ) {
-			    	$html .= '<span class="meta-label meta-view-count">';
-			    	if ( $icons ) :
-			    		$html .= '<i class="ion-eye"></i>';
-			    	endif;
-					$html .= wpb_get_post_views( get_the_ID() );
-					$html .= '</span>';
-				}
-	    	endif;
-
-			if ( $comments ) :
-
-		    	if ( $post_options['post_comments'] ) {
-
-			    	if ( comments_open() && ! post_password_required() ) :
-
-						$num_comments = get_comments_number();
-
-						if ( comments_open() ) {
-							$html .= '<span class="meta-label meta-comment">';
-							if ( $icons ) :
-								$html .= '<i class="ion-chatbubble"></i>';
-							endif;
-							if ( $num_comments == 0 ) {
-								$comments = __('No Comments', SIMPLE_THEME_SLUG);
-							} elseif ( $num_comments > 1 ) {
-								$comments = $num_comments . __(' Comments', SIMPLE_THEME_SLUG);
-							} else {
-								$comments = __('1 Comment', SIMPLE_THEME_SLUG);
-							}
-							$html .= '<a href="' . get_comments_link() .'">'. $comments.'</a>';
-						} else {
-							$html .=  __('Comments are off for this post.', SIMPLE_THEME_SLUG);
-						}
-
-			    		if ( $num_comments != 0 ) {
-			    			$html .= '</span>';
-			    		}
-
-			    	endif;
-
-		    	}
-
-	    	endif;
-
-	    $html .= '</div>';
-
+			}
+		$html .= '</div>';
 		return $html;
+
 	}
 	add_action('simple_post_meta','simple_post_meta');
 }
