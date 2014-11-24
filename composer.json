@@ -1,7 +1,7 @@
 {
   "name": "simple",
   "description": "WordPress Theme description",
-  "type": "wordpress-theme",
+  "type": "vcs",
   "homepage": "http://getsimple.io",
   "authors": [
     {
@@ -9,6 +9,5 @@
       "email": "hello@getsimple.io",
       "homepage": "http://getsimple.io"
     }
-  ],
-  "minimum-stability": "dev-master"
+  ]
 }
