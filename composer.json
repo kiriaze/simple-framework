@@ -1,0 +1,15 @@
+{
+  "name": "simple",
+  "description": "WordPress Theme description",
+  "keywords": ["wordpress", "theme", "simple"],
+  "homepage": "http://getsimple.io",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Constantine Kiriaze",
+      "email": "hello@getsimple.io",
+      "homepage": "http://getsimple.io"
+    }
+  ],
+  "type": "wordpress-theme"
+}
