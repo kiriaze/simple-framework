@@ -1,7 +1,7 @@
 {
   "name": "simple",
   "description": "WordPress Theme description",
-  "type": "wordpress-theme"
+  "type": "wordpress-theme",
   "homepage": "http://getsimple.io",
   "authors": [
     {
