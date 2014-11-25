@@ -815,7 +815,14 @@ function wp_get_attachment( $attachment_id ) {
 
 /*	List the terms for taxonomy ($args = tax, show links, all terms or those specific to post)
 ================================================== */
-function list_terms( $taxonomy = 'category', $anchors = true, $postID = null, $wrap = null ) {
+function list_terms( $args ) {
+
+	$taxonomy = isset($args['taxonomy']) ? $args['taxonomy'] : 'category';
+	$anchors  = isset($args['anchors']) ? $args['anchors'] : true;
+	$postID   = isset($args['postID']) ? $args['postID'] : null;
+	$wrap     = isset($args['wrap']) ? $args['wrap'] : null;
+	$echo     = isset($args['echo']) ? $args['echo'] : true;
+
 
 	if ( $postID ) {
 		$terms = get_the_terms($postID, $taxonomy);
@@ -853,15 +860,23 @@ function list_terms( $taxonomy = 'category', $anchors = true, $postID = null, $w
 					$term_list .= '</'.$wrap.'>';
 				endif;
 
-				if ($count != $i) {
-					$term_list .= ' &middot; ';
-				} else {
-					$term_list .= '';
-				}
+
+				$term_list .= ' ';
+
+				// if ( $count != $i ) {
+				// 	$term_list .= ' &middot; ';
+				// } else {
+				// 	$term_list .= '';
+				// }
 
 			}
 
-			echo $term_list;
+			if ( $echo ) {
+				echo $term_list;
+			} else {
+				return $term_list;
+			}
+
 
 		}
 
