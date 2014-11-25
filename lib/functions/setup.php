@@ -68,7 +68,7 @@ function simple_setup() {
 	add_theme_support('remove_admin_bar_links');	//	Remove Unwanted Admin Menu Items(from admin bar)
 
 	//  Redirect to theme options on theme activation
-	if( is_admin() && isset($_GET['activated']) && 'themes.php' == $GLOBALS['pagenow'] ) {
+	if ( is_admin() && isset( $_GET['activated'] ) && 'themes.php' == $GLOBALS['pagenow'] ) {
 		wp_redirect(admin_url('themes.php?page=options-framework'));
 		exit;
 	}
