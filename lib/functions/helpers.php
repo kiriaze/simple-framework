@@ -860,15 +860,8 @@ function list_terms( $args ) {
 					$term_list .= '</'.$wrap.'>';
 				endif;
 
-
 				$term_list .= ' ';
-
-				// if ( $count != $i ) {
-				// 	$term_list .= ' &middot; ';
-				// } else {
-				// 	$term_list .= '';
-				// }
-
+				
 			}
 
 			if ( $echo ) {
