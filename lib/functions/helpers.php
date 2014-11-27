@@ -276,7 +276,13 @@ function delete_retina_support_images( $attachment_id ) {
 add_filter( 'delete_attachment', 'delete_retina_support_images' );
 
 
-
+/*	Upload svg capability through wp media upload
+================================================== */
+function cc_mime_types( $mimes ){
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'cc_mime_types' );
 
 
 
