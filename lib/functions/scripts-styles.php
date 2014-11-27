@@ -1,15 +1,5 @@
 <?php
 
-function simple_enqueue_styles() {
-
-	// Register
-	wp_register_style( 'style', get_stylesheet_directory_uri() . '/style.css' );
-
-	// Enqueue
-	wp_enqueue_style('style');
-
-}
-
 function simple_enqueue_scripts() {
 
 	// Gzip Compression
@@ -59,11 +49,9 @@ function simple_enqueue_scripts() {
 // }
 
 
-add_action( 'wp_enqueue_scripts', 'simple_enqueue_styles' );
 add_action( 'wp_enqueue_scripts', 'simple_enqueue_scripts' );
 // add_action('admin_enqueue_scripts', 'simple_enqueue_admin_scripts' );
 // add_action('wp_enqueue_scripts', 'simple_example_scripts');
-
 
 
 // http://wordpress.stackexchange.com/a/12450
