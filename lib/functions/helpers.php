@@ -867,7 +867,7 @@ function list_terms( $args ) {
 				endif;
 
 				$term_list .= ' ';
-				
+
 			}
 
 			if ( $echo ) {
