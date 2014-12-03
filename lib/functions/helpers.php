@@ -295,19 +295,18 @@ add_filter( 'upload_mimes', 'cc_mime_types' );
 add_action('wp_footer', 'simple_debug');
 function simple_debug($current_user){
 
+	global $template;
+	$template 		= basename( simple_template_path() );
+	$template 		= explode( '/', $template );
+	$array_count 	= count( $template );
+	$array_count 	= $array_count - 1;
+	$template 		= $template[$array_count];
+
 	// if theme enables it
 	if ( current_theme_supports('debug')  )
 
-
 	// if user is currently logged in and its in local env
 	if ( is_user_logged_in() && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
-
-		global $template;
-		$template 		= basename( simple_template_path() );
-		$template 		= explode( '/', $template );
-		$array_count 	= count( $template );
-		$array_count 	= $array_count - 1;
-		$template 		= $template[$array_count];
 
 		global $current_user;
 		get_currentuserinfo();
@@ -372,7 +371,7 @@ function simple_debug($current_user){
 
 /*	Simple Print
 ================================================== */
-function sp( $var, $args = array() ){
+function sp( $var, $args = array() ) {
 
 	$defaults = array(
 		'strip_tags'  	=> false,
