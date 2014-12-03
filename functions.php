@@ -15,7 +15,7 @@
 require_once locate_template( '/lib/functions/constants.php', true );
 require_once locate_template( '/lib/functions/setup.php', true );
 
-add_action( 'after_setup_theme', 'load_functions', 11 );
+add_action( 'after_setup_theme', 'load_functions', 10 );
 function load_functions() {
 	require_once locate_template( '/lib/functions/acf.php', true );
 	require_once locate_template( '/lib/functions/admin.php', true );
