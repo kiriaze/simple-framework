@@ -11,15 +11,6 @@ function simple_enqueue_scripts() {
 		define('ENFORCE_GZIP', true);
 	}
 
-	// Simple.js
-	wp_register_script('app', get_stylesheet_directory_uri() . '/assets/js/app-min.js', array('jquery'), '', true );
-	wp_localize_script( 'app', 'adminAjax',
-		array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'nonce'   => wp_create_nonce('ajax-nonce')
-		)
-	);
-
 	// Enqueue
     if ( !is_admin() && current_theme_supports('jquery-cdn') ) {
     	wp_deregister_script('jquery'); // Deregister WordPress jQuery
@@ -28,8 +19,7 @@ function simple_enqueue_scripts() {
     }
 
     wp_enqueue_script('jquery');
-	wp_enqueue_script('app');
-
+    
 }
 
 
