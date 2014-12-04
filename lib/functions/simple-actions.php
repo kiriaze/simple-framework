@@ -538,7 +538,7 @@ if ( !function_exists('simple_social_footer') ) {
 
 					// special use case for gplus
 					if ( $key == 'google_plus_url' ) {
-						$channel = 'plus.google';
+						$channel = 'google';
 						$class = 'google-plus';
 					}
 
