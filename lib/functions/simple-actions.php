@@ -468,7 +468,7 @@ if ( !function_exists('simple_post_meta') ) {
 					// sp($key);
 					if ( $key == 'icons' ) continue;
 					$keyOutput = $key.'Output';
-					echo $$keyOutput;
+					$html .= $$keyOutput;
 				}
 			}
 		$html .= '</div>';
