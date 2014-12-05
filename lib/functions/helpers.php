@@ -201,8 +201,8 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 	if ( $url ) {
 		$html 		.= "<a href='".$url."' data-effect='mfp-fade-in-up'>";
 	}
-		$html 		.= "<img src='".get_stylesheet_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
-		// $html 		.= "<img src='".$src[0]."' alt='$title' class='".$imgClasses."' />";
+		// $html 		.= "<img src='".get_stylesheet_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
+		$html 		.= "<img src='".$src[0]."' alt='$title' class='".$imgClasses."' />";
 	if ( $url ) {
 		$html 		.= "</a>";
 	}
@@ -210,7 +210,7 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 
 	return $html;
 }
-// add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
+add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
 
 
 /*	Retina.js Images
