@@ -91,8 +91,10 @@ function simple_body_class( $classes ){
 	$loggedIn 			  	= is_user_logged_in() ? 'logged-in' : '';
 	$blog 	  			  	= ( is_archive() || is_search() || is_home() ) ? 'archive blog list-view' : '';
 	$archive				= is_archive() ? strtolower(post_type_archive_title('',false)) : '';
+
 	// Grab layout options
 	$presentation_options 	= of_get_option( 'blog_layout' );
+
 	// if no_sidebar_layout option is not selected and sidebar is active, and template is not full width
 	$sidebar 				= ( $presentation_options != 'no_sidebar_layout' &&
 							( is_active_sidebar( 'sidebar_blog' ) || is_active_sidebar( 'sidebar_default' ) )
@@ -102,8 +104,6 @@ function simple_body_class( $classes ){
 	$one_page				= ( of_get_option('child_general_multi_checkbox')['enable_one_page'] == '1' ) ? 'one-page' : '';
 
 	$page_slug 				= !is_search() && !is_404() && isset( $post->ID ) ? $post->post_type . '-' . $post->post_name : '';
-	// sanitize_html_class($post->post_name), // slug
-
 
 	//	Output classes
 	return array(
@@ -116,8 +116,7 @@ function simple_body_class( $classes ){
 		$boxed,
 		get_post_type(),
 		$single,
-		$one_page,
-		// 'sbg' // themeoptions styling class
+		$one_page
 	);
 
 	return $classes;

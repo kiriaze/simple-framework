@@ -27,7 +27,7 @@ function load_functions() {
 	require_once locate_template( '/lib/functions/helpers.php', true );
 	require_once locate_template( '/lib/functions/menus.php', true );
 	require_once locate_template( '/lib/functions/options.php', true );
-	require_once locate_template( '/lib/functions/plugins.php', true );
+	require_once locate_template( '/lib/functions/tgm-plugin-activation/class-tgm-plugin-activation.php', true );
 	require_once locate_template( '/lib/functions/scripts-styles.php', true );
 	require_once locate_template( '/lib/functions/search.php', true );
 	require_once locate_template( '/lib/functions/sidebars.php', true );
