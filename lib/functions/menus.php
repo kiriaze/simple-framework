@@ -121,14 +121,18 @@ class NestedMenu {
 // );
 add_filter('wp_nav_menu_objects', 'nav_submenu_objects_filter', 10, 2);
 function nav_submenu_objects_filter( $items, $args ) {
+	
 	// $loc should be an array of items. if it's empty, move along
 	$loc = isset( $args->submenu ) ? $args->submenu : '';
+	
 	if ( !isset($loc) || empty($loc) ) {
 		return $items;
 	}
+	
 	if ( is_string($loc) ) {
 		$loc = split("/", $loc);
 	}
+
 	if ( empty($loc) ) {
 		return $items;
 	}
