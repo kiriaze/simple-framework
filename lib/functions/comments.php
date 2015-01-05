@@ -19,7 +19,7 @@ function simple_comments($comment, $args, $depth){
 
 		<div class="comment-author vcard">
 		
-			<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, '180' ); ?>
+			<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['avatar_size'] ); ?>
 		
 		</div>
 

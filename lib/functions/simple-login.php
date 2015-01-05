@@ -2,9 +2,11 @@
 
 // Change login page style adding your custom css in $output
 function simple_login_head() {
-    wp_enqueue_style( 'simple_login_head', get_template_directory_uri() . '/lib/admin/login/login.css', false );
-	wp_enqueue_script('jquery');
-	wp_enqueue_script( 'login', get_template_directory_uri() . '/lib/admin/login/login.js' );
+    
+    wp_enqueue_style( 'simple_login_head', get_stylesheet_directory_uri() . '/assets/css/login.css', false );
+	
+    wp_enqueue_script('jquery');
+	wp_enqueue_script( 'login', get_stylesheet_directory_uri() . '/assets/login/login.js' );
 
     if ( of_get_option( 'login_logo') ) :
         $output = '
@@ -15,6 +17,7 @@ function simple_login_head() {
         ';
         echo "\n<style>\n" . preg_replace( '/\s+/', ' ', $output ) . "\n</style>\n";
     endif;
+
 }
 
 function simple_login_url() {

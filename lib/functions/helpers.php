@@ -67,6 +67,7 @@
 *		- Is Login Screen
 *		- Get More Themes Link
 *		- Footer Admin Extra Text
+*		- Load Template Part ( get_template_part() w/o echo )
 *
 *
 *	@package	Simple
@@ -826,7 +827,10 @@ function list_terms( $args ) {
 	$postID   = isset($args['postID']) ? $args['postID'] : null;
 	$wrap     = isset($args['wrap']) ? $args['wrap'] : null;
 	$echo     = isset($args['echo']) ? $args['echo'] : true;
-
+	
+	// testing output of params a function can accept
+	$params   = isset($args['params']) ? 
+		sp('$taxonomy : category'. "\n" .'$anchors : true'. "\n" .'$postID : null'. "\n" .'$wrap : null'. "\n" .'$echo : true') : '';
 
 	if ( $postID ) {
 		$terms = get_the_terms($postID, $taxonomy);
@@ -1139,4 +1143,13 @@ if ( !function_exists('HexToRGB') ) {
 		return implode(",", $rgba); // returns the rgb values separated by commas
 		// return $rgba; // returns an array with the rgb values
 	}
+}
+
+// get_template_part without echo
+function load_template_part($template_name, $part_name = null) {
+	ob_start();
+	get_template_part($template_name, $part_name);
+	$var = ob_get_contents();
+	ob_end_clean();
+	return $var;
 }
