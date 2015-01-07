@@ -592,16 +592,17 @@ add_filter( 'get_search_form', 'simple_search_form' );
 
 /*	Redirect to result if only one found
 ============================================ */
-function single_search_result() {
-	if ( is_search() ) {
-		global $wp_query;
-		if ( $wp_query->post_count == 1 ) {
-			wp_redirect( get_permalink( $wp_query->posts['0']->ID ) );
+if ( current_theme_supports('single-search-result') ) :
+	function single_search_result() {
+		if ( is_search() ) {
+			global $wp_query;
+			if ( $wp_query->post_count == 1 ) {
+				wp_redirect( get_permalink( $wp_query->posts['0']->ID ) );
+			}
 		}
 	}
-}
-add_action('template_redirect', 'single_search_result');
-
+	add_action('template_redirect', 'single_search_result');
+endif;
 
 /*	Search only posts, not pages
 ============================================ */
@@ -827,9 +828,9 @@ function list_terms( $args ) {
 	$postID   = isset($args['postID']) ? $args['postID'] : null;
 	$wrap     = isset($args['wrap']) ? $args['wrap'] : null;
 	$echo     = isset($args['echo']) ? $args['echo'] : true;
-	
+
 	// testing output of params a function can accept
-	$params   = isset($args['params']) ? 
+	$params   = isset($args['params']) ?
 		sp('$taxonomy : category'. "\n" .'$anchors : true'. "\n" .'$postID : null'. "\n" .'$wrap : null'. "\n" .'$echo : true') : '';
 
 	if ( $postID ) {
