@@ -181,7 +181,7 @@ if ( !function_exists('simple_footer_widgets') ) {
 
 								<div class="widget">
 									<h6 class="widgettitle">Widget Title</h6>
-									<p><a href="http://wordpress.dev/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
+									<p><a href="/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
 								</div>
 
 								<?php endif;
