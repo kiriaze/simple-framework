@@ -2,20 +2,20 @@
 
 function simple_enqueue_scripts() {
 
-	// Gzip Compression
-	global $compress_scripts, $concatenate_scripts;
-	$compress_scripts = 1;
-	$concatenate_scripts = 1;
-
-	if ( defined('ENFORCE_GZIP') ) {
-		define('ENFORCE_GZIP', true);
-	}
-
 	// Enqueue
     if ( !is_admin() && current_theme_supports('jquery-cdn') ) {
     	wp_deregister_script('jquery'); // Deregister WordPress jQuery
     	wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js', false, '2.0.3', true); // Google CDN jQuery
     	add_filter('script_loader_src', 'simple_jquery_local_fallback', 10, 2);
+    } else {
+		// Gzip Compression
+		global $compress_scripts, $concatenate_scripts;
+		$compress_scripts = 1;
+		$concatenate_scripts = 1;
+
+		if ( defined('ENFORCE_GZIP') ) {
+			define('ENFORCE_GZIP', true);
+		}
     }
 
     wp_enqueue_script('jquery');
