@@ -348,6 +348,8 @@ function simple_debug($current_user){
 							text-indent: 12px;
 							vertical-align: top;
 							padding: 0;
+							margin: 0;
+							line-height: 1.8;
 						}
 						#debug-bar:hover {
 							max-width: 500px;

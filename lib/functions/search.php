@@ -3,8 +3,6 @@
 /**
  * Redirects search results from /?s=query to /search/query/, converts %20 to +
  *
- * @link http://txfx.net/wordpress-plugins/nice-search/
- * Requires plugin to be installed and activated
  */
 function simple_nice_search_redirect() {
 	global $wp_rewrite;
