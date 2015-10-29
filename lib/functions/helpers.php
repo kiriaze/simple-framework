@@ -611,13 +611,11 @@ endif;
 if ( !is_admin() ) {
 	function simple_search_filter($query) {
 		if ( $query->is_search && !is_admin() ) {
-			// global $query;
-			// $query	= apply_filters('simple_search_filter', $query);
-			$query->set( 'post_type', array('post') );
+			$post_types	= apply_filters('simple_search_filter', $query);
+			$query->set( 'post_type', $post_types );
 		}
 		return $query;
 	}
-	// add_action( 'search_filter' , 'simple_search_filter' );
 	add_filter('pre_get_posts','simple_search_filter');
 }
 
