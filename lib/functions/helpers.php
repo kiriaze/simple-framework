@@ -19,7 +19,6 @@
 *		- Pretty Print pp() Extending print_r()
 *
 * 	3. Removals
-*		- Remove Admin Bar
 *		- Remove 'text/css' from our enqueued stylesheet
 *		- Remove <p> tags in Dynamic Sidebars
 *		- Remove invalid rel attribute
@@ -399,15 +398,6 @@ function sp( $var, $args = array() ) {
 /* ============================================
 	3. Removals
 ============================================ */
-
-/*	Remove Admin bar
-================================================== */
-add_filter('show_admin_bar', 'remove_admin_bar');
-function remove_admin_bar() {
-	if( current_theme_supports('admin_bar') ) {
-		return true;
-	}
-}
 
 
 /*	Remove 'text/css' from our enqueued stylesheet
@@ -1069,6 +1059,16 @@ function id_css() {
 <style type="text/css">
 	#id {
 		width: 50px;
+	}
+	/* also wp_auth_check modal when session expired in admin styles */
+	#wp-auth-check-wrap #wp-auth-check {
+		padding: 0;
+	}
+	#wp-auth-check-wrap #wp-auth-check-form {
+		overflow: hidden;
+	}
+	#wp-auth-check-wrap #wp-auth-check-form iframe {
+		height: 100%;
 	}
 </style>
 <?php
