@@ -1057,11 +1057,9 @@ add_filter( 'manage_edit-page_sortable_columns', 'custom_column_register_sortabl
 function id_css() {
 ?>
 <style type="text/css">
-	
 	#id {
 		width: 50px;
 	}
-	
 	/* also wp_auth_check modal when session expired in admin styles */
 	#wp-auth-check-wrap #wp-auth-check {
 		padding: 0;
@@ -1072,7 +1070,6 @@ function id_css() {
 	#wp-auth-check-wrap #wp-auth-check-form iframe {
 		height: 100%;
 	}
-	
 </style>
 <?php
 }
