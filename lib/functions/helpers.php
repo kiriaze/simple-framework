@@ -80,8 +80,9 @@
 ============================================ */
 
 /*	Body Classes : Remove wp defaults, add clean classes
+*   priority 0 to prevent other plugins from messing up body classes
 ================================================== */
-add_filter( 'body_class', 'simple_body_class' );
+add_filter( 'body_class', 'simple_body_class', 0 );
 function simple_body_class( $classes ){
 
 	global $post;
