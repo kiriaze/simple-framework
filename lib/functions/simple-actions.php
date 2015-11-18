@@ -163,34 +163,32 @@ if ( !function_exists('simple_footer_widgets') ) {
 		$footer_widgets = of_get_option('footer_multi_checkbox')['footer_widgets_checkbox'];
 
 		if ( $footer_widgets ) { ?>
+		
+			<div data-layout="grid">
+				<?php foreach ( $GLOBALS['wp_registered_sidebars'] as $sidebar ) {
 
-			<section class="footer-widgets">
-				<div data-layout="grid">
-					<?php foreach ( $GLOBALS['wp_registered_sidebars'] as $sidebar ) {
+					$sidebars = [];
+					if ( substr( $sidebar['id'], 0, 15 ) == 'sidebar_footer_' ) {
+						array_push($sidebars, $sidebar['id']);
+						foreach ($sidebars as $sidebar) {
+							// sp( $sidebar );
+							if ( is_active_sidebar( $sidebar ) ) : ?>
 
-						$sidebars = [];
-						if ( substr( $sidebar['id'], 0, 15 ) == 'sidebar_footer_' ) {
-							array_push($sidebars, $sidebar['id']);
-							foreach ($sidebars as $sidebar) {
-								// sp( $sidebar );
-								if ( is_active_sidebar( $sidebar ) ) : ?>
+								<?php dynamic_sidebar($sidebar); ?>
 
-									<?php dynamic_sidebar($sidebar); ?>
+							<?php else : ?>
 
-								<?php else : ?>
+							<div class="widget">
+								<h6 class="widgettitle">Widget Title</h6>
+								<p><a href="/wp/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
+							</div>
 
-								<div class="widget">
-									<h6 class="widgettitle">Widget Title</h6>
-									<p><a href="/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
-								</div>
-
-								<?php endif;
-							}
+							<?php endif;
 						}
+					}
 
-					} ?>
-				</div>
-			</section>
+				} ?>
+			</div>
 
 		<?php }
 	}

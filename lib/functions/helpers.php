@@ -352,7 +352,7 @@ function simple_debug($current_user){
 							line-height: 1.8;
 						}
 						#debug-bar:hover {
-							max-width: 500px;
+							max-width: 800px;
 						}
 						</style>';
 		$debug_bar .= '<div id="debug-bar">';
