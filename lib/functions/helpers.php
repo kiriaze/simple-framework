@@ -201,8 +201,8 @@ function simple_html5_image($html, $id, $caption, $title, $align, $url, $size, $
 	if ( $url ) {
 		$html 		.= "<a href='".$url."' data-effect='mfp-fade-in-up'>";
 	}
-		// $html 		.= "<img src='".get_stylesheet_directory_uri()."/assets/images/gray.png' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
-		$html 		.= "<img src='".$src[0]."' alt='$title' class='".$imgClasses."' />";
+		$html 		.= "<img src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' data-original='$src[0]' alt='$title' class='".$imgClasses."' />";
+		// $html 		.= "<img src='".$src[0]."' alt='$title' class='".$imgClasses."' />";
 	if ( $url ) {
 		$html 		.= "</a>";
 	}

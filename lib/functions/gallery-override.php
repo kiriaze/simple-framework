@@ -2,6 +2,17 @@
 
 // Using easy faders, consider replacing with either swiper, flex, sudoslider, superslides
 
+// Add class slide to attachments to enable slider if post format is gallery
+add_filter( 'wp_get_attachment_image_attributes', 'add_slide_class_to_attachments' );
+function add_slide_class_to_attachments( $attr ) {
+    
+    if ( has_post_format('gallery') ) {
+        $attr['class'] .= ' slide lazy';
+    }
+    return $attr;
+
+}
+
 add_filter( 'post_gallery', 'simple_post_gallery', 10, 2 );
 function simple_post_gallery( $output, $attr) {
     global $post, $wp_locale;
@@ -89,9 +100,9 @@ function simple_post_gallery( $output, $attr) {
         $imageURL = wp_get_attachment_image_src($id, $size, false)[0];
 
         $default_attr = array(
-            // 'data-original' => wp_get_attachment_image_src($id, $size, false)[0],
-            // 'src'           => get_stylesheet_directory_uri() . '/assets/images/gray.png',
-            'src' => wp_get_attachment_image_src($id, $size, false)[0],
+            'data-original' => wp_get_attachment_image_src($id, $size, false)[0],
+            'src'           => 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+            // 'src' => wp_get_attachment_image_src($id, $size, false)[0],
         );
 
         $link = isset( $attr['link'] ) && 'file' == $attr['link'] ? wp_get_attachment_image($id, $size, false, $default_attr) : wp_get_attachment_image($id, $size, false, $default_attr);
@@ -126,10 +137,3 @@ function simple_post_gallery( $output, $attr) {
 
     return $output;
 }
-
-// Add class slide to attachments to enable slider
-function add_slide_class_to_attachments( $attr ) {
-    $attr['class'] .= ' slide lazy';
-    return $attr;
-}
-add_filter( 'wp_get_attachment_image_attributes', 'add_slide_class_to_attachments' );
