@@ -372,23 +372,60 @@ function simple_debug($current_user){
 
 
 /*	Simple Print
+*	Ex. Usage:
+*	sp($var, array('strip_tags' => true, 'allow_tags' => '<p><a>'));
+*	sp([$foo, $bar, $foobar, $text], ['strip_tags' => true, 'allow_tags' => '<p><a>']);
 ================================================== */
-function sp( $var, $args = array() ) {
+
+function clean($el, $args = []) {
+	if ( array_key_exists('tags', $args) ) {
+		return strip_tags($el, htmlspecialchars_decode($args['tags']));
+	} else {
+		return strip_tags($el);
+	}
+}
+
+function sp( $var = [], $args = [] ) {
 
 	$defaults = array(
 		'strip_tags'  	=> false,
 		'allow_tags'	=> null
 	);
 
-	$options = array_merge($defaults, $args);
+	$options = array_merge($defaults, array_map('htmlspecialchars', $args));
 
-	if( $options['strip_tags'] ){
-		$var = strip_tags($var, $options['allow_tags']);
+	if ( $options['strip_tags'] ) {
+
+		if ( $options['allow_tags'] ) {
+			$tags            = $options['allow_tags'];
+			$options['tags'] = $tags;
+		}
+
+		if ( is_array($var) ) {
+			foreach ( $var as $key => $item ) {
+				if ( is_array($item) ) {
+					foreach ($item as $key2 => $value) {
+						echo '<pre>';
+						echo clean($value, $options);
+						echo '</pre>';
+					}
+				} else {
+					echo '<pre>';
+					echo clean($item, $options);
+					echo '</pre>';
+				}
+			}
+		} else {
+			echo '<pre>';
+			echo clean($var, $options);
+			echo '</pre>';	
+		}
+
+	} else {
+		echo '<pre>';
+		print_r($var);
+		echo '</pre>';
 	}
-
-	echo '<pre>';
-	print_r($var);
-	echo '</pre>';
 
 }
 
@@ -614,52 +651,61 @@ if ( !is_admin() ) {
 /*	Pagination
 ============================================ */
 
-if ( ! function_exists( 'simple_pagination' ) ) :
-function simple_pagination( $args = NULL ) {
+if ( ! function_exists( 'simple_pagination' ) ) {
+	function simple_pagination( $args = NULL ) {
 
-	// args
-	$prev_text 	= isset($args['prev_text']) ? $args['prev_text'] : '';
-	$next_text 	= isset($args['next_text']) ? $args['next_text'] : '';
+		// args
+		$prev_text      = isset($args['prev_text']) ? $args['prev_text'] : 'Prev Page';
+		$next_text      = isset($args['next_text']) ? $args['next_text'] : 'Next Page';
+		$default_style  = isset($args['default_style']) ? $args['default_style'] : false;
+		$classes        = isset($args['classes']) ? $args['classes'] : '';
 
-	global $wp_query;
+		global $wp_query;
 
-	$infiniteScroll = of_get_option('blog_multi_checkbox')['infinite_scroll'];
+		$infiniteScroll = of_get_option('blog_multi_checkbox')['infinite_scroll'];
 
-	if ( $wp_query->max_num_pages > 1 ) :
-		if ( $infiniteScroll == '1' ) {
-			$infiniteScrollClass = 'infinite-scroll-pagination';
-		} else {
-			$infiniteScrollClass = '';
-		}
-	?>
-		<nav class="pagination <?php echo $infiniteScrollClass; ?>" role="navigation">
-			<ul>
-				<li>
-					<?php next_posts_link( __( $next_text, SIMPLE_THEME_SLUG) ); ?>
-				</li>
-				<li>
-					<?php previous_posts_link( __( $prev_text, SIMPLE_THEME_SLUG) ); ?>
-				</li>
-			</ul>
-		</nav>
-	<?php endif;
+		if ( $wp_query->max_num_pages > 1 ) :
+
+			if ( $infiniteScroll == '1' ) {
+				$classes .= ' infinite-scroll-pagination';
+			}
+
+			if ( $default_style || $infiniteScroll ) : ?>
+
+			<nav class="pagination <?php echo $classes; ?>" role="navigation">
+				<ul>
+					<?php if ( $infiniteScroll ) : ?>
+						<li>
+							<?php next_posts_link( __( $next_text, SIMPLE_THEME_SLUG) ); ?>
+						</li>
+					<?php else : ?>
+						<li>
+							<?php previous_posts_link( __( $prev_text, SIMPLE_THEME_SLUG) ); ?>
+						</li>
+						<li>
+							<?php next_posts_link( __( $next_text, SIMPLE_THEME_SLUG) ); ?>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</nav>
+
+			<?php else :
+
+				$big = 999999999;
+
+				// « Previous 1 2 3 4 5 6 … 11 Next »
+				echo paginate_links(array(
+					'base'    => str_replace($big, '%#%', get_pagenum_link($big)),
+					'format'  => '?paged=%#%',
+					'current' => max( 1, get_query_var('paged') ),
+					'total'   => $wp_query->max_num_pages
+				));
+				
+			endif;
+
+		endif;
+	}
 }
-endif;
-
-
-// Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
-// if ( ! function_exists( 'simple_pagination' ) ) :
-// function simple_pagination() {
-//     global $wp_query;
-//     $big = 999999999;
-//     echo paginate_links(array(
-//         'base' => str_replace($big, '%#%', get_pagenum_link($big)),
-//         'format' => '?paged=%#%',
-//         'current' => max(1, get_query_var('paged')),
-//         'total' => $wp_query->max_num_pages
-//     ));
-// }
-// endif;
 
 
 
@@ -1128,7 +1174,10 @@ endif;
 // HexToRGB
 if ( !function_exists('HexToRGB') ) {
 	function HexToRGB($hex, $alpha = null) {
+	    
 	    $hex = str_replace('#', '', $hex);
+	    
+	    $r = $g = $b = $a = '';
 
 		if ( strlen($hex) == 3 ) {
 			$r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
@@ -1141,6 +1190,7 @@ if ( !function_exists('HexToRGB') ) {
 			$b = hexdec(substr($hex, 4, 2));
 			$a = $alpha ? $alpha : '1';
 		}
+
 		$rgba = array($r, $g, $b, $a);
 		return implode(",", $rgba); // returns the rgb values separated by commas
 		// return $rgba; // returns an array with the rgb values

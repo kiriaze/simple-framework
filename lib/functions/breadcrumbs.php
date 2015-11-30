@@ -309,7 +309,7 @@ class Simple_Breadcrumbs {
 		
 		// If we're using permalinks, then we need to add user_trailingslashit;
 		// Otherwise, we use the old way of doing it.
-		if( simple_is_using_pretty_permalinks() ) { 		
+		if ( get_option('permalink_structure') ) {
 			$author_data = get_userdata( get_query_var( 'author' ) );
 		} else {
 			$author_data = get_userdata( user_trailingslashit( get_query_var( 'author' ) ) );			

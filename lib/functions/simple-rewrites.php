@@ -14,7 +14,7 @@ function simple_rewrites(){
 	define('THEME_PATH',            RELATIVE_CONTENT_PATH . '/themes/' . THEME_NAME);
 
 	function add_filters($tags, $function) {
-		foreach($tags as $tag) {
+		foreach( $tags as $tag ) {
 			add_filter($tag, $function);
 		}
 	}
@@ -22,7 +22,7 @@ function simple_rewrites(){
 	function simple_base_relative_url($input) {
 		preg_match('|https?://([^/]+)(/.*)|i', $input, $matches);
 
-		if (isset($matches[1]) && isset($matches[2]) && $matches[1] === $_SERVER['SERVER_NAME']) {
+		if ( isset($matches[1]) && isset($matches[2]) && $matches[1] === $_SERVER['SERVER_NAME'] ) {
 			return wp_make_link_relative($input);
 		} else {
 			return $input;
@@ -30,15 +30,18 @@ function simple_rewrites(){
 	}
 
 	function simple_enable_base_relative_urls() {
-		return !( is_admin() || in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php') ) ) && current_theme_supports('simple-relative-urls');
+		return !( is_admin() || in_array( $GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php') ) ) && current_theme_supports('simple-relative-urls');
 	}
 
-	if (simple_enable_base_relative_urls()) {
+	if ( simple_enable_base_relative_urls() ) {
 		$simple_rel_filters = array(
 			'bloginfo_url',
 			'the_permalink',
 			'wp_list_pages',
 			'wp_list_categories',
+			
+			'wp_get_attachment_url',
+
 			'the_content_more_link',
 			'the_tags',
 			'get_pagenum_link',
@@ -46,7 +49,11 @@ function simple_rewrites(){
 			'month_link',
 			'day_link',
 			'year_link',
+
 			'tag_link',
+
+			'term_link',
+
 			'the_author_posts_link',
 			'script_loader_src',
 			'style_loader_src'
@@ -82,7 +89,7 @@ function simple_rewrites(){
 	}
 
 	function simple_clean_urls($content) {
-		if (strpos($content, RELATIVE_PLUGIN_PATH) > 0) {
+		if ( strpos($content, RELATIVE_PLUGIN_PATH) > 0 ) {
 			return str_replace('/' . RELATIVE_PLUGIN_PATH,  '/plugins', $content);
 		} else {
 			return str_replace('/' . THEME_PATH, '', $content);
@@ -109,6 +116,6 @@ function simple_rewrites(){
 		}
 
 	}
-
+	
 }
 add_action( 'after_setup_theme', 'simple_rewrites', 11 );

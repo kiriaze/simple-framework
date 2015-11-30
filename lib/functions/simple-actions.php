@@ -254,20 +254,40 @@ if ( !function_exists('simple_post_pagination') ) {
 
 	function simple_post_pagination( $args = NULL ) {
 
-		if ( of_get_option('blog_multi_checkbox')['post_pagination_checkbox'] ){
+		if ( of_get_option('blog_multi_checkbox')['post_pagination_checkbox'] && is_single() ) {
 
-			$showTitles 		= isset($args['showTitles']) ? $args['showTitles'] : true;
+			// Get post type    
+			$post_type_obj = get_post_type_object( get_post_type() );
+			
+			// Get custom post type's label    
+			$archive_title = apply_filters('post_type_archive_title', $post_type_obj->has_archive);
+
+			// Get blog posts page name
+			$title = $archive_title ? $archive_title : get_page(get_option('page_for_posts'))->post_name;
+
+			$showTitles = !empty($args['showTitles']) ? $args['showTitles'] : false;
+			$prev_text  = isset($args['prev_text']) ? $args['prev_text'] : $showTitles ? '%title' : 'Prev ' . get_post_type();
+			$next_text  = isset($args['next_text']) ? $args['next_text'] : $showTitles ? '%title' : 'Next ' . get_post_type();
+			$back_text  = isset($args['back_text']) ? $args['back_text'] : 'Back to ' . $title;
+			$back_link  = !empty($args['back_link']) ? '<a href="'. get_post_type_archive_link(get_post_type()) .'">'. $back_text .'</a>' : '';
+
+			$prev_link  = get_previous_post_link('%link', $prev_text) ? get_previous_post_link('%link', $prev_text) : '<a class="disabled" href="javascript:;">'. $prev_text .'</a>';
+			$next_link  = get_next_post_link('%link', $next_text) ? get_next_post_link('%link', $next_text) : '<a class="disabled" href="javascript:;">'. $next_text .'</a>';
+
+			// add wrapper args like before and after, e.g. 'html_before_fields' => '<div class="container">' // left open ended
 
 			// Prev and Next post links
-			echo '<div class="post-pagination">';
-				if ( $showTitles ) :
-					previous_post_link();
-					next_post_link();
-				else :
-					previous_post_link('%link', 'Prev Post');
-					next_post_link('%link', 'Next Post');
-				endif;
-			echo '</div>';
+			echo '<nav class="post-pagination" role="navigation">';
+				
+				echo '<ul>';
+
+					echo '<li>' . $prev_link . '</li>';
+					echo '<li>' . $back_link . '</li>';
+					echo '<li>' . $next_link . '</li>';
+				
+				echo '</ul>';
+
+			echo '</nav>';
 		}
 	}
 	add_action('simple_post_pagination','simple_post_pagination');
