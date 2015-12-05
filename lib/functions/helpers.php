@@ -91,7 +91,9 @@ function simple_body_class( $classes ){
 	$template 			  	= !is_tax() && !is_category() ? basename( get_page_template() ) : '';
 	$loggedIn 			  	= is_user_logged_in() ? 'logged-in' : '';
 	$blog 	  			  	= ( is_archive() || is_search() || is_home() ) ? 'archive blog list-view' : '';
-	$archive				= is_archive() ? strtolower(post_type_archive_title('',false)) : '';
+	$archive				= is_archive() ? strtolower(post_type_archive_title('', false)) : '';
+	
+	$author					= is_author() ? 'author' : '';
 
 	// Grab layout options
 	$presentation_options 	= of_get_option( 'blog_layout' );
@@ -110,6 +112,7 @@ function simple_body_class( $classes ){
 	return array(
 		$blog,
 		$archive,
+		$author,
 		$page_slug,
 		substr($template, 0, -4), // template name
 		$loggedIn, // logged-in class
