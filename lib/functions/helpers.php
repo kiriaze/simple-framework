@@ -92,7 +92,7 @@ function simple_body_class( $classes ){
 	$loggedIn 			  	= is_user_logged_in() ? 'logged-in' : '';
 	$blog 	  			  	= ( is_archive() || is_search() || is_home() ) ? 'archive blog list-view' : '';
 	$archive				= is_archive() ? strtolower(post_type_archive_title('', false)) : '';
-	
+
 	$author					= is_author() ? 'author' : '';
 
 	// Grab layout options
@@ -421,7 +421,7 @@ function sp( $var = [], $args = [] ) {
 		} else {
 			echo '<pre>';
 			echo clean($var, $options);
-			echo '</pre>';	
+			echo '</pre>';
 		}
 
 	} else {
@@ -703,7 +703,7 @@ if ( ! function_exists( 'simple_pagination' ) ) {
 					'current' => max( 1, get_query_var('paged') ),
 					'total'   => $wp_query->max_num_pages
 				));
-				
+
 			endif;
 
 		endif;
@@ -1177,9 +1177,9 @@ endif;
 // HexToRGB
 if ( !function_exists('HexToRGB') ) {
 	function HexToRGB($hex, $alpha = null) {
-	    
+
 	    $hex = str_replace('#', '', $hex);
-	    
+
 	    $r = $g = $b = $a = '';
 
 		if ( strlen($hex) == 3 ) {

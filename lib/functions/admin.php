@@ -12,7 +12,7 @@ if ( current_theme_supports('admin_bar') && current_user_can( 'manage_options' )
 	}
 	add_filter( 'body_class', 'admin_bar_body_class', 20 );
 	function admin_bar_body_class( $classes ){
-		$classes[] = 'show-admin-bar'; // so as to add top/margin on elems
+		$classes[] = 'admin-bar'; // so as to add top/margin on elems
 		return $classes;
 	}
 } else {
@@ -29,13 +29,13 @@ if ( current_theme_supports('admin_bar') && current_user_can( 'manage_options' )
  * Filterable: $args['users'] = array(); $args['links'] = array(); return $args;
  */
 if ( current_theme_supports('remove_admin_bar_links') ) :
-	
+
 	add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
-	
+
 	function remove_admin_bar_links() {
-		
+
 		global $wp_admin_bar;
-		
+
 		$args  = apply_filters('sf_remove_admin_bar_links', array());
 		$users = array_key_exists('users', $args) ? $args['users'] : [];
 		$links = array_key_exists('links', $args) ? $args['links'] : [];
@@ -100,7 +100,7 @@ if ( current_theme_supports('remove_admin_menu_items') ) :
 		$menu_items = array_merge( $menu_items, $items );
 
 		global $menu;
-		
+
 		foreach ( $menu as $key => $item ) {
 			$item_name = $item[0] != NULL ? $item[0] : '';
 			// if html tags in name, strip em. e.g. Comments/Plugins
