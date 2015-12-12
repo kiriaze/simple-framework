@@ -218,17 +218,18 @@ add_filter( 'image_send_to_editor', 'simple_html5_image', 10, 9 );
 
 /*	Retina.js Images
 ================================================== */
-function retina_support_attachment_meta( $metadata, $attachment_id ) {
-    foreach ( $metadata as $key => $value ) {
-        if ( is_array( $value ) ) {
-            foreach ( $value as $image => $attr ) {
-                if ( is_array( $attr ) )
-                    retina_support_create_images( get_attached_file( $attachment_id ), $attr['width'], $attr['height'], true );
-            }
-        }
-    }
+function retina_support_attachment_meta( $attachment_id, $file ) {
+	if ( is_array($file) )
+	foreach ( $file as $key => $value ) {
+		if ( is_array( $value ) ) {
+			foreach ( $value as $image => $attr ) {
+				if ( is_array( $attr ) )
+					retina_support_create_images( get_attached_file( $attachment_id ), $attr['width'], $attr['height'], true );
+			}
+		}
+	}
 
-    return $metadata;
+	return $file;
 }
 add_filter( 'wp_generate_attachment_metadata', 'retina_support_attachment_meta', 10, 2 );
 
@@ -682,19 +683,21 @@ if ( ! function_exists( 'simple_pagination' ) ) {
 							<?php next_posts_link( __( $next_text, SIMPLE_THEME_SLUG) ); ?>
 						</li>
 					<?php else : ?>
-						<li>
+						<li class="prev">
 							<?php previous_posts_link( __( $prev_text, SIMPLE_THEME_SLUG) ); ?>
 						</li>
-						<li>
+						<li class="next">
 							<?php next_posts_link( __( $next_text, SIMPLE_THEME_SLUG) ); ?>
 						</li>
 					<?php endif; ?>
 				</ul>
 			</nav>
 
-			<?php else :
+			<?php else : ?>
 
-				$big = 999999999;
+				<nav class="pagination <?php echo $classes; ?>" role="navigation">
+
+				<?php $big = 999999999;
 
 				// « Previous 1 2 3 4 5 6 … 11 Next »
 				echo paginate_links(array(
@@ -704,6 +707,9 @@ if ( ! function_exists( 'simple_pagination' ) ) {
 					'total'   => $wp_query->max_num_pages
 				));
 
+				?>
+				</nav>
+			<?php
 			endif;
 
 		endif;
