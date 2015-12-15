@@ -68,9 +68,9 @@ h2.nav-tab-wrapper{
 	margin-bottom: 0;
 }
 
-h2.nav-tab-wrapper, 
+h2.nav-tab-wrapper,
 h3.nav-tab-wrapper {
-	border: none;
+	border: none !important;
 }
 
 h2 .nav-tab {
@@ -120,7 +120,7 @@ h2 .nav-tab:active{
 
 
 #optionsframework .section-background .wp-picker-container,
-.wp-core-ui .button, 
+.wp-core-ui .button,
 .wp-core-ui .button-secondary,
 #optionsframework .controls input.upload {
 	display: inline-block;
@@ -135,7 +135,7 @@ h2 .nav-tab:active{
 
 
 /* Customizer */
-/*.wp-full-overlay.collapsed, 
+/*.wp-full-overlay.collapsed,
 .wp-full-overlay.expanded .wp-full-overlay-sidebar {
 	box-shadow: none;
 }
@@ -147,7 +147,7 @@ h2 .nav-tab:active{
 	height: auto;
 	line-height: normal;
 }
-#customize-header-actions > a, 
+#customize-header-actions > a,
 #customize-header-actions > input {
 	border-radius: 0;
 	background: none;

@@ -160,38 +160,77 @@ if ( !function_exists('archives_after') ) {
 if ( !function_exists('simple_footer_widgets') ) {
 
 	function simple_footer_widgets() {
+
 		$footer_widgets = of_get_option('footer_multi_checkbox')['footer_widgets_checkbox'];
 
-		if ( $footer_widgets ) { ?>
-		
-			<div data-layout="grid">
-				<?php foreach ( $GLOBALS['wp_registered_sidebars'] as $sidebar ) {
+		// Footer sidebar
+		if ( $footer_widgets ) :
 
-					$sidebars = [];
-					if ( substr( $sidebar['id'], 0, 15 ) == 'sidebar_footer_' ) {
-						array_push($sidebars, $sidebar['id']);
-						foreach ($sidebars as $sidebar) {
-							// sp( $sidebar );
-							if ( is_active_sidebar( $sidebar ) ) : ?>
+			if ( is_active_sidebar( 'sidebar_footer' ) ) :
 
-								<?php dynamic_sidebar($sidebar); ?>
+				echo '<div data-layout="grid">';
 
-							<?php else : ?>
+					dynamic_sidebar( 'sidebar_footer' );
 
-							<div class="widget">
-								<h6 class="widgettitle">Widget Title</h6>
-								<p><a href="/wp/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
-							</div>
+				echo '</div>';
 
-							<?php endif;
-						}
-					}
+			else :
 
-				} ?>
-			</div>
+				echo '<div class="widget">
+						<h6 class="widgettitle">Widget Title</h6>
+						<p><a href="/wp/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
+					</div>';
 
-		<?php }
+			endif;
+
+		endif;
+
+		// // 4 footer sidebars, for stackable widgets
+		// if ( $footer_widgets ) :
+
+		// 	$sidebars = [];
+
+		// 	foreach ( $GLOBALS['wp_registered_sidebars'] as $sidebar ) :
+
+		// 		if ( substr( $sidebar['id'], 0, 15 ) == 'sidebar_footer_' ) :
+
+		// 			array_push($sidebars, $sidebar['id']);
+
+		// 		endif;
+
+		// 	endforeach;
+
+		// 	echo '<div data-layout="grid">';
+
+		// 		foreach ( $sidebars as $key => $sidebar ) :
+
+		// 			if ( is_active_sidebar( $sidebar ) ) :
+
+		// 				echo '<div class="columns-4">';
+		// 					dynamic_sidebar($sidebar);
+		// 				echo '</div>';
+
+		// 			else :
+
+		// 				if ( $key == 0 ) :
+
+		// 					echo '<div class="widget">
+		// 							<h6 class="widgettitle">Widget Title</h6>
+		// 							<p><a href="/wp/wp-admin/widgets.php">Click here to assign a widget to this area.</a></p>
+		// 						</div>';
+
+		// 				endif;
+
+		// 			endif;
+
+		// 		endforeach;
+
+		// 	echo '</div>';
+
+		// endif;
+
 	}
+
 	add_action( 'simple_footer_widgets', 'simple_footer_widgets' );
 
 }
@@ -256,10 +295,10 @@ if ( !function_exists('simple_post_pagination') ) {
 
 		if ( of_get_option('blog_multi_checkbox')['post_pagination_checkbox'] && is_single() ) {
 
-			// Get post type    
+			// Get post type
 			$post_type_obj = get_post_type_object( get_post_type() );
-			
-			// Get custom post type's label    
+
+			// Get custom post type's label
 			$archive_title = apply_filters('post_type_archive_title', $post_type_obj->has_archive);
 
 			// Get blog posts page name
@@ -278,13 +317,13 @@ if ( !function_exists('simple_post_pagination') ) {
 
 			// Prev and Next post links
 			echo '<nav class="post-pagination" role="navigation">';
-				
+
 				echo '<ul>';
 
 					echo '<li>' . $prev_link . '</li>';
 					echo '<li>' . $back_link . '</li>';
 					echo '<li>' . $next_link . '</li>';
-				
+
 				echo '</ul>';
 
 			echo '</nav>';
