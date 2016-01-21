@@ -41,7 +41,7 @@ if ( current_theme_supports('remove_admin_bar_links') ) :
 		$links = array_key_exists('links', $args) ? $args['links'] : [];
 
 		// users to exclude. e.g. multiple admins, exclude targeting main admin
-		if ( in_array( wp_get_current_user()->ID, $users ) ) return;
+		if ( in_array( wp_get_current_user()->user_login, $users ) ) return;
 
 		// not removing any by default, since no clean way to unset them from child. $elements[] passed from child
 		$elements = array(
@@ -83,7 +83,7 @@ if ( current_theme_supports('remove_admin_menu_items') ) :
 		$items = array_key_exists('items', $args) ? $args['items'] : [];
 
 		// users to exclude. e.g. multiple admins, exclude targeting main admin
-		if ( in_array( wp_get_current_user()->ID, $users ) ) return;
+		if ( in_array( wp_get_current_user()->user_login, $users ) ) return;
 
 		// not removing any by default, since no clean way to unset them from child. $menu_items[] passed from child
 		$menu_items = array(
